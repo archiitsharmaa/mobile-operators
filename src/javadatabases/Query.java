@@ -92,18 +92,8 @@ public class Query {
 	
 	
 	
-	public static void main(String[] args) {
+	public static void queryExceutor(Connection connection) {
 		
-		//intialies resources
-		resourceIntializer();
-		
-		//fetching configs
-		String databaseURL = ReadProperties.getResource("Db_URL");
-		String userID = ReadProperties.getResource("User");
-		String password = ReadProperties.getResource("Password"); 
-		String databaseName = ReadProperties.getResource("Database");
-		
-
 		//queries
 		String query1 = "Select MESSAGE FROM MESSAGE_DATA WHERE SENDER_NUMBER = 8872049908";
 		String query2 = "Select MESSAGE FROM MESSAGE_DATA WHERE RECIEVER_NUMBER = 9872848978";
@@ -115,24 +105,14 @@ public class Query {
 		
 		
 		//try resources to print the values 
-		Connection connection;
-		try {
-			connection = databaseConnector(databaseURL+databaseName, userID, password);
-			printQuery(connection, query1);
-			printQuery(connection, query2);
-			printQuery(connection, query3);
-			printQuery(connection, query4);
-			printQuery(connection, query5);
-			printQuery(connection, query6);
-			printQuery(connection, query7);
+		printQuery(connection, query1);
+		printQuery(connection, query2);
+		printQuery(connection, query3);
+		printQuery(connection, query4);
+		printQuery(connection, query5);
+		printQuery(connection, query6);
+		printQuery(connection, query7);
 			
-			
-		} 
-		
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
-		}
 		
 		
 	}

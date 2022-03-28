@@ -4,7 +4,6 @@ package javadatabases;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -29,8 +28,6 @@ public class OperatorDatabase {
 	
 	// default config routes
 	public static final String DB_URL = "jdbc:mysql://localhost/";
-	public static final String USER = "root";
-	public static final String PASSWORD = "archit04";
 	public static final String DATABASE = "MoblieOperator";
 	public static final String OPERATOR_TABLE = "OPERATOR_DATA";
 	public static final String MESSAGE_TABLE = "MESSAGE_DATA";
@@ -50,16 +47,6 @@ public class OperatorDatabase {
 			log.info("Default database url used");
 			databaseURL = DB_URL;
 		}
-		
-		if(userID == null || userID.isEmpty()) {
-			log.info("Default user ID used");
-			userID = USER;
-		}
-		
-		if(password == null || password.isEmpty()) {
-			log.info("Default password used");
-			password = PASSWORD;
-		}
 			
 		//creates connection object from the driver manager and throws exception if occured
 		try{
@@ -67,8 +54,14 @@ public class OperatorDatabase {
 			log.info("Connected to server successfull");
 			return connection;
 			}
-			catch(Exception e) {
+			catch(SQLException e) {
+				
+				if(e.getErrorCode() == 1045){
+					throw new Exception("error in userID or password, cannot connect");
+				}
+				else {
 				throw new Exception("Error occured while connecting to the server");
+				}
 			}
 	}
 	
@@ -175,7 +168,7 @@ public class OperatorDatabase {
 		                   " RECIEVER_NUMBER BIGINT, " + 
 		                   " MESSAGE TEXT(255), " +
 		                   " SENT_TIME TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, " + 
-		                   " RECIVED_TIME TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, " + 
+		                   " RECIVED_TIME TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " + 
 		                   " STATUS VARCHAR(255), " +
 		                   " PRIMARY KEY ( MESSAGEID ))"; 
 
@@ -372,6 +365,9 @@ public class OperatorDatabase {
 		//inserting values in tables
 		insertOperatorValue(connection, operatorTable);
 		insertMessageDetails(connection, messageTable);
+		
+		//executing query
+		Query.queryExceutor(connection);
 		
 		//closing the connection
 		connection.close();
