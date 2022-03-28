@@ -1,0 +1,51 @@
+15:24:36.076 [main] INFO  javadatabases.OperatorDatabase - Connected to server successfull
+15:24:36.092 [main] INFO  javadatabases.OperatorDatabase - Database already exists
+15:24:36.093 [main] INFO  javadatabases.OperatorDatabase - Database selected successfully
+15:24:36.095 [main] INFO  javadatabases.OperatorDatabase - Operator table already exists
+15:24:36.096 [main] INFO  javadatabases.OperatorDatabase - Message table already exists
+15:24:36.126 [main] INFO  javadatabases.OperatorDatabase - Duplicate values inserted in operator table
+15:24:36.136 [main] INFO  javadatabases.OperatorDatabase - Duplicate values inserted in message table
+15:24:36.153 [main] INFO  javadatabases.OperatorDatabase - executing query : Select MESSAGE FROM MESSAGE_DATA WHERE SENDER_NUMBER = 8872049908
+15:24:36.153 [main] INFO  javadatabases.OperatorDatabase - messages: same time same place
+15:24:36.153 [main] INFO  javadatabases.OperatorDatabase - messages: thats it for you
+15:24:36.153 [main] INFO  javadatabases.OperatorDatabase - ****
+15:24:36.154 [main] INFO  javadatabases.OperatorDatabase - executing query : Select MESSAGE FROM MESSAGE_DATA WHERE RECIEVER_NUMBER = 9872848978
+15:24:36.154 [main] INFO  javadatabases.OperatorDatabase - messages: Hi ali hows you
+15:24:36.155 [main] INFO  javadatabases.OperatorDatabase - ****
+15:24:36.156 [main] INFO  javadatabases.OperatorDatabase - executing query : Select MESSAGE FROM MESSAGE_DATA WHERE YEAR(SENT_TIME) BETWEEN 2021 AND 2022
+15:24:36.156 [main] INFO  javadatabases.OperatorDatabase - messages: we are going to have a problem soon bro
+15:24:36.156 [main] INFO  javadatabases.OperatorDatabase - messages: hehehehehhehe
+15:24:36.157 [main] INFO  javadatabases.OperatorDatabase - messages: hehehehehhehe
+15:24:36.157 [main] INFO  javadatabases.OperatorDatabase - messages: its time to sleep
+15:24:36.157 [main] INFO  javadatabases.OperatorDatabase - messages: see you bro there
+15:24:36.157 [main] INFO  javadatabases.OperatorDatabase - messages: same time same place
+15:24:36.157 [main] INFO  javadatabases.OperatorDatabase - messages: we are going to gym
+15:24:36.157 [main] INFO  javadatabases.OperatorDatabase - messages: dont call back 
+15:24:36.158 [main] INFO  javadatabases.OperatorDatabase - messages: please call back
+15:24:36.158 [main] INFO  javadatabases.OperatorDatabase - messages: we ll probably not finish this by today
+15:24:36.158 [main] INFO  javadatabases.OperatorDatabase - messages: we ll do that
+15:24:36.158 [main] INFO  javadatabases.OperatorDatabase - messages: thats it for you
+15:24:36.158 [main] INFO  javadatabases.OperatorDatabase - messages: they are late
+15:24:36.158 [main] INFO  javadatabases.OperatorDatabase - messages: rejected idea
+15:24:36.159 [main] INFO  javadatabases.OperatorDatabase - messages: select them all
+15:24:36.159 [main] INFO  javadatabases.OperatorDatabase - messages: buy everything
+15:24:36.159 [main] INFO  javadatabases.OperatorDatabase - messages: got it
+15:24:36.159 [main] INFO  javadatabases.OperatorDatabase - messages: thats it tired
+15:24:36.159 [main] INFO  javadatabases.OperatorDatabase - messages: Hi ali hows you
+15:24:36.159 [main] INFO  javadatabases.OperatorDatabase - ****
+15:24:36.161 [main] INFO  javadatabases.OperatorDatabase - executing query : Select MESSAGE FROM MESSAGE_DATA WHERE RECIEVER_NUMBER = 9872848978 AND FLOOR(((SENDER_NUMBER/100000) %10)) = 4
+15:24:36.161 [main] INFO  javadatabases.OperatorDatabase - messages: Hi ali hows you
+15:24:36.161 [main] INFO  javadatabases.OperatorDatabase - ****
+15:24:36.162 [main] INFO  javadatabases.OperatorDatabase - executing query : Select MESSAGE FROM MESSAGE_DATA WHERE RECIEVER_NUMBER = 8872349908 AND FLOOR(((SENDER_NUMBER/100000) %10)) = 4 AND FLOOR(SENDER_NUMBER/1000000) = 9872
+15:24:36.162 [main] INFO  javadatabases.OperatorDatabase - messages: please call back
+15:24:36.162 [main] INFO  javadatabases.OperatorDatabase - messages: select them all
+15:24:36.162 [main] INFO  javadatabases.OperatorDatabase - ****
+15:24:36.163 [main] INFO  javadatabases.OperatorDatabase - executing query : Select MESSAGE FROM MESSAGE_DATA WHERE FLOOR(RECIEVER_NUMBER/100) = 98728489
+15:24:36.164 [main] INFO  javadatabases.OperatorDatabase - messages: we are going to have a problem soon bro
+15:24:36.164 [main] INFO  javadatabases.OperatorDatabase - messages: we ll probably not finish this by today
+15:24:36.164 [main] INFO  javadatabases.OperatorDatabase - messages: got it
+15:24:36.164 [main] INFO  javadatabases.OperatorDatabase - messages: Hi ali hows you
+15:24:36.164 [main] INFO  javadatabases.OperatorDatabase - ****
+15:24:36.165 [main] INFO  javadatabases.OperatorDatabase - executing query : Select MESSAGE FROM MESSAGE_DATA WHERE STATUS = 'failed' AND FLOOR(((SENDER_NUMBER/100000) %10)) = 4
+15:24:36.165 [main] INFO  javadatabases.OperatorDatabase - messages: hehehehehhehe
+15:24:36.165 [main] INFO  javadatabases.OperatorDatabase - messages: see you bro there

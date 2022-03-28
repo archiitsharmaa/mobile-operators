@@ -1,7 +1,6 @@
 package javadatabases;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,25 +13,7 @@ public class Query {
 	
 	// static variables accessed as global variables
 	public static Logger logger = LogManager.getLogger(OperatorDatabase.class.getName());
-	
-	// default config routes
-	public static final String DB_URL = "jdbc:mysql://localhost/";
-	public static final String USER = "root";
-	public static final String PASSWORD = "archit04";
-	public static final String DATABASE = "MoblieOperator";
-	public static final String OPERATOR_TABLE = "OPERATOR_DATA";
-	public static final String MESSAGE_TABLE = "MESSAGE_DATA";
-
-	
-	
-	
-	
-	public static void resourceIntializer() {
-		// configures from the config files
-		ReadProperties.getFile();
-	}
-	
-	
+		
 	//prints query for the connection
 	public static void printQuery(Connection connection, String query) {
 		
@@ -57,41 +38,7 @@ public class Query {
 		
 	}
 	
-	
-	//creates connection with the server 
-		public static Connection databaseConnector(String databaseURL, String userID, String password) throws Exception {
-			
-			//if the passed value from the configs is empty or missing it sets the default value
-			if(databaseURL == null || databaseURL.isEmpty()) {
-				logger.info("Default database url used");
-				databaseURL = DB_URL;
-			}
-			
-			if(userID == null || userID.isEmpty()) {
-				logger.info("Default user ID used");
-				userID = USER;
-			}
-			
-			if(password == null || password.isEmpty()) {
-				logger.info("Default password used");
-				password = PASSWORD;
-			}
-				
-			//creates connection object from the driver manager and throws exception if occured
-			try{
-				Connection connection = DriverManager.getConnection(databaseURL, userID, password);
-				logger.info("Connected to server successfull");
-				return connection;
-				}
-				catch(Exception e) {
-					throw new Exception("Error occured while connecting to the server");
-				}
-		}
-
-	
-	
-	
-	
+	//function to execute queries
 	public static void queryExceutor(Connection connection) {
 		
 		//queries
