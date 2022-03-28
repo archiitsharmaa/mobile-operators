@@ -106,11 +106,17 @@ public class Query {
 		
 		//try resources to print the values 
 		printQuery(connection, query1);
+		logger.info("****");
 		printQuery(connection, query2);
+		logger.info("****");
 		printQuery(connection, query3);
+		logger.info("****");
 		printQuery(connection, query4);
+		logger.info("****");
 		printQuery(connection, query5);
+		logger.info("****");
 		printQuery(connection, query6);
+		logger.info("****");
 		printQuery(connection, query7);
 			
 		
