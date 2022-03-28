@@ -196,38 +196,6 @@ public class OperatorDatabase {
 		  }		 		
 	}
 	
-	//Drop database for testing purpose
-	public static void dropDatabase(String databaseURL, String userID, String password) {
-		
-		try(Connection conn = DriverManager.getConnection(databaseURL, userID, password);
-		         Statement stmt = conn.createStatement();
-		      ) {		      
-		         String sql = "DROP DATABASE moblieoperator";
-		         stmt.executeUpdate(sql);
-		         System.out.println("Database dropped successfully...");   	  
-		      } catch (SQLException e) {
-		         e.printStackTrace();
-		      } 
-	}
-	
-	//get information 
-	public static void getDatabasesName(String databaseURL, String userID, String password) {
-		
-		try(Connection connection = DriverManager.getConnection(databaseURL, userID, password)){
-        
-        java.sql.DatabaseMetaData metadata = connection.getMetaData();
-        ResultSet result = metadata.getCatalogs();
-         
-        while (result.next()) {
-            String aDBName = result.getString(1);
-            System.out.println(aDBName);
-        }      
-		}
-		catch(Exception e) {
-			System.out.println(e);
-		}
-		
-	}
 	
 	public static void insertOperatorValue(Connection connection, String operatorTable) throws Exception {
 		
@@ -372,57 +340,10 @@ public class OperatorDatabase {
 		
 	}
 	
-	//testing values
-		public static void select(Connection connection) {
-			
-			String QUERY = "select phone_number, operator, region from OPERATOR_DATA ";
-			
-			try(Statement stmt = connection.createStatement();
-			     ResultSet rs = stmt.executeQuery(QUERY);
-			      ) {		      
-			         while(rs.next()){
-			            //Display values
-			            System.out.print("phone_number: " + rs.getInt("phone_number"));
-			            System.out.print(", operator: " + rs.getString("operator"));
-			            System.out.print(", region: " + rs.getString("region"));
-			            System.out.println("\n");
-			         }
-			      } catch (SQLException e) {
-			         e.printStackTrace();
-			      } 
-			
-		}
-		
-		
-		//testing 2 ND values
-		public static void selectsecond(Connection connection) {
-			
-			String QUERY = "select MESSAGEID, SENDER_NUMBER, RECIEVER_NUMBER, MESSAGE, SENT_TIME, RECIVED_TIME, STATUS  from MESSAGE_DATA ";
-			
-			try(Statement stmt = connection.createStatement();
-			    ResultSet rs = stmt.executeQuery(QUERY);
-			      ) {		      
-			         while(rs.next()){
-			            //Display values
-			            System.out.print("MESSAGEID: " + rs.getInt("MESSAGEID"));
-			            System.out.print(", SENDER_NUMBER: " + rs.getString("SENDER_NUMBER"));
-			            System.out.print(", RECIEVER_NUMBER: " + rs.getString("RECIEVER_NUMBER"));
-			            System.out.print(", MESSAGE: " + rs.getString("MESSAGE"));
-			            System.out.print(", SENT_TIME: " + rs.getString("SENT_TIME"));
-			            System.out.print(", RECIVED_TIME: " + rs.getString("RECIVED_TIME"));
-			            System.out.print(", STATUS: " + rs.getString("STATUS"));
-			            System.out.println("\n");
-			         }
-			      } 
-			catch (SQLException e) {
-			         e.printStackTrace();
-			      } 
-			
-		}
-		
-	
+	//main function
 	
 	public static void main(String[] args) {
+		
 		
 		try {
 			
@@ -437,37 +358,32 @@ public class OperatorDatabase {
 		String operatorTable = ReadProperties.getResource("Operator_Table");
 		String messageTable = ReadProperties.getResource("Message_Table");
 	
+		//crating connections to database
+	    Connection connection = databaseConnector(databaseURL, userID, password);
 		
-		//dropDatabase(databaseURL, userID, password);
-		
-		Connection connection = databaseConnector(databaseURL, userID, password);
-		
+	    //intialising and selecting the database
 		databaseIntializer(connection, databaseName);
 		databaseSelector(connection, databaseName);
 		
-		
+		//intializing tables
 		operatorInfoTableIntializer(connection, operatorTable);
 		messageInfoTableIntializer(connection, messageTable);
 		
-		
-		
+		//inserting values in tables
 		insertOperatorValue(connection, operatorTable);
 		insertMessageDetails(connection, messageTable);
 		
-		
-
+		//closing the connection
 		connection.close();
 		
-		
-
 		
 	}
 		catch(Exception e) {
 			//connection.close();
 			log.error(e.getMessage());
 		}
+	}
 		
 		
 	}
 
-}

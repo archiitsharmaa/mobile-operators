@@ -2,7 +2,6 @@ package javadatabases;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -43,7 +42,7 @@ public class Query {
 		ResultSet resultset = stmt.executeQuery(query);
 		
 		//querying prints the query
-		logger.info("executing query : "+query);
+		logger.info("executing query : "+ query);
 		
 		while(resultset.next()){
             //Display values
@@ -111,8 +110,8 @@ public class Query {
 		String query3 = "Select MESSAGE FROM MESSAGE_DATA WHERE YEAR(SENT_TIME) BETWEEN 2021 AND 2022";
 		String query4 = "Select MESSAGE FROM MESSAGE_DATA WHERE RECIEVER_NUMBER = 9872848978 AND FLOOR(((SENDER_NUMBER/100000) %10)) = 4";
 		String query5 = "Select MESSAGE FROM MESSAGE_DATA WHERE RECIEVER_NUMBER = 8872349908 AND FLOOR(((SENDER_NUMBER/100000) %10)) = 4 AND FLOOR(SENDER_NUMBER/1000000) = 9872";
-	 	String query6 = "SELECT MESSAGE FROM MESSAGE_DATA WHERE FLOOR(RECIEVER_NUMBER/100) = 98728489";
-		String query7 = "SELECT MESSAGE FROM MESSAGE_DATA WHERE STATUS = 'failed' AND FLOOR(((SENDER_NUMBER/100000) %10)) = 4";
+	 	String query6 = "Select MESSAGE FROM MESSAGE_DATA WHERE FLOOR(RECIEVER_NUMBER/100) = 98728489";
+		String query7 = "Select MESSAGE FROM MESSAGE_DATA WHERE STATUS = 'failed' AND FLOOR(((SENDER_NUMBER/100000) %10)) = 4";
 		
 		
 		//try resources to print the values 
