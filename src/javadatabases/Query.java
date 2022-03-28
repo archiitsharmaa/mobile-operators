@@ -14,7 +14,11 @@ public class Query {
 	// static variables accessed as global variables
 	public static Logger logger = LogManager.getLogger(OperatorDatabase.class.getName());
 		
-	//prints query for the connection
+	/**
+	 * prints query for the connection
+	 * @param connection - connection to the object
+	 * @param query -> query string
+	 */
 	public static void printQuery(Connection connection, String query) {
 		
 		//query results
@@ -38,7 +42,11 @@ public class Query {
 		
 	}
 	
-	//function to execute queries
+	
+	/**
+	 * function to execute queries
+	 * @param connection -> connects to the object
+	 */
 	public static void queryExceutor(Connection connection) {
 		
 		//queries

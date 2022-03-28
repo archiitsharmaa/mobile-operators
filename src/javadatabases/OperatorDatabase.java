@@ -32,14 +32,24 @@ public class OperatorDatabase {
 	public static final String OPERATOR_TABLE = "OPERATOR_DATA";
 	public static final String MESSAGE_TABLE = "MESSAGE_DATA";
 
-	/* resource initializer checks for the resource file's error and exceptions in
-	it, if present empty etc*/
+	
+	/**
+	 * Initializes the config file
+	 */
 	public static void resourceIntializer() {
 		// configures from the config files
 		ReadProperties.getFile();
 	}
 	
-	//creates connection with the server 
+	
+	/**
+	 * creates connection with the server 
+	 * @param databaseURL -> database url
+	 * @param userID -> user id
+	 * @param password -> password
+	 * @return -> returns connection object
+	 * @throws Exception
+	 */
 	public static Connection databaseConnector(String databaseURL, String userID, String password) throws Exception {
 		
 		//if the passed value from the configs is empty or missing it sets the default value
@@ -65,7 +75,13 @@ public class OperatorDatabase {
 			}
 	}
 	
-	//create database in the server
+		
+	/**
+	 * create database in the server
+	 * @param connection -> connection to the database
+	 * @param databaseName -> database name
+	 * @throws Exception
+	 */
 	public static void databaseIntializer(Connection connection, String databaseName) throws Exception {
 		
 		//if the passed value from the configs is empty or missing it sets the default value
@@ -93,7 +109,14 @@ public class OperatorDatabase {
 		} 
 	}
 	
-	//selects database for a given error
+	
+	
+	/**
+	 * selects database
+	 * @param connection -> connetion for the server
+	 * @param database -> database name
+	 * @throws Exception
+	 */
 	public static void databaseSelector(Connection connection, String database) throws Exception {
 		
 		//if the passed value from the configs is empty or missing it sets the default value
@@ -118,7 +141,12 @@ public class OperatorDatabase {
 	}
 
 	
-	//intialize table for storing operator details
+	/**
+	 * Initialize table for storing operator details
+	 * @param connection -> connection to database
+	 * @param operatorTable -> table name
+	 * @throws Exception
+	 */
 	public static void operatorInfoTableIntializer(Connection connection, String operatorTable) throws Exception{
 		
 		//if the passed value from the configs is empty or missing it sets the default value
@@ -152,7 +180,14 @@ public class OperatorDatabase {
 		  }
 	}
 	
-	//intilaize table for message transaction details
+	
+	
+	/**
+	 * intilaize table for message transaction details
+	 * @param connection -> connection to the database
+	 * @param messageTable - table name string
+	 * @throws Exception
+	 */
 	public static void messageInfoTableIntializer(Connection connection, String messageTable) throws Exception {
 		
 		//if the passed value from the configs is empty or missing it sets the default value
@@ -190,6 +225,12 @@ public class OperatorDatabase {
 	}
 	
 	
+	/**
+	 * inserts / populates the message table
+	 * @param connection -> connection to the database
+	 * @param operatorTable -> message table name
+	 * @throws Exception
+	 */
 	public static void insertOperatorValue(Connection connection, String operatorTable) throws Exception {
 		
 		//if the passed value from the configs is empty or missing it sets the default value
@@ -278,6 +319,12 @@ public class OperatorDatabase {
 	}
 	
 	
+	/**
+	 * inserts / populates the message table
+	 * @param connection -> connection to the database
+	 * @param messageTable ->  table name
+	 * @throws Exception
+	 */
 	public static void insertMessageDetails(Connection connection, String messageTable) throws Exception {
 		
 		//if the passed value from the configs is empty or missing it sets the default value
