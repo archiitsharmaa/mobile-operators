@@ -27,8 +27,7 @@ public class OperatorDatabase {
 	public static Logger log = LogManager.getLogger(OperatorDatabase.class.getName());
 	
 	// default config routes
-	public static final String DB_URL = "jdbc:mysql://localhost/";
-	public static final String DATABASE = "MoblieOperator";
+	public static final String DATABASE = "MobileOperator";
 	public static final String OPERATOR_TABLE = "OPERATOR_DATA";
 	public static final String MESSAGE_TABLE = "MESSAGE_DATA";
 
@@ -52,11 +51,9 @@ public class OperatorDatabase {
 	 */
 	public static Connection databaseConnector(String databaseURL, String userID, String password) throws Exception {
 		
-		//if the passed value from the configs is empty or missing it sets the default value
-		if(databaseURL == null || databaseURL.isEmpty()) {
-			log.info("Default database url used");
-			databaseURL = DB_URL;
-		}
+		//string utils
+		//url should not be default
+		//url + string if database connects the statement
 			
 		//creates connection object from the driver manager and throws exception if occured
 		try{
@@ -147,30 +144,30 @@ public class OperatorDatabase {
 	 * @param operatorTable -> table name
 	 * @throws Exception
 	 */
-	public static void operatorInfoTableIntializer(Connection connection, String operatorTable) throws Exception{
+	public static void operatorRangeInfoTableIntializer(Connection connection, String operatorRangeTable) throws Exception{
 		
 		//if the passed value from the configs is empty or missing it sets the default value
-		if(operatorTable == null || operatorTable.isEmpty()) {
-			log.info("Default operator table name used");
-			operatorTable = OPERATOR_TABLE;
-		}		
+//		if(operatorTable == null || operatorTable.isEmpty()) {
+//			log.info("Default operator table name used");
+//			operatorTable = OPERATOR_TABLE;
+//		}		
 		
 		//creates MESSAGE table with mentioned field
 		try(Statement stmt = connection.createStatement();) {		      
-		          String create_table = "CREATE TABLE " + operatorTable +
-		                   "(phone_number INT not NULL, " +
+		          String create_table = "CREATE TABLE " + operatorRangeTable +
+		                   "(phone_range INT not NULL, " +
 		                   " operator VARCHAR(255), " + 
-		                   " region VARCHAR(255), " + 
-		       		       " PRIMARY KEY ( phone_number ))"; 
+		       		       " PRIMARY KEY (phone_range ))"; 
 
 		         stmt.executeUpdate(create_table);
 		         log.info("Created operator table in given database");   	  
 		      } 
 		catch (SQLException e) {
+			System.out.println(e.getMessage());
 			   	  
     	//checks if the exception code matches the table exists code and then logs table exists error
 			if(e.getErrorCode() == 1050) {
-				log.info("Operator table already exists");
+				log.info(operatorRangeTable+" already exists");
 			}
 			//throws any other exception if occurred
 			else {
@@ -213,6 +210,7 @@ public class OperatorDatabase {
 		catch (SQLException e) {
 			
 			//checks if the exception code matches the table exists code and then logs table exists error
+			//changes
 			if(e.getErrorCode() == 1050) {
 				log.info("Message table already exists");
 			}
@@ -231,70 +229,49 @@ public class OperatorDatabase {
 	 * @param operatorTable -> message table name
 	 * @throws Exception
 	 */
-	public static void insertOperatorValue(Connection connection, String operatorTable) throws Exception {
+	public static void insertOperatorRangeValue(Connection connection, String operatorRangeTable) throws Exception {
 		
 		//if the passed value from the configs is empty or missing it sets the default value
-		if(operatorTable == null || operatorTable.isEmpty()) {
+		if(operatorRangeTable == null || operatorRangeTable.isEmpty()) {
 			log.info("Default operator table used");
-			operatorTable = OPERATOR_TABLE;
+			operatorRangeTable = OPERATOR_TABLE;
 		}	
 		
 		//inserts value in the table and exits if insert errors exists
 		try {
 		
 		//prepared statement to insert in table	
-		PreparedStatement prepapredStatement = connection.prepareStatement("INSERT INTO " + operatorTable + " VALUES (?, ?, ?)");
-		
-		//string array of regions
-		String[] operatorRegions = new String[] {"Himachal Pradesh", "Jammu and Kashmir", "Ladakh", "Uttrakhand", "Punjab", "Haryana", "Delhi", "Uttar Pradesh", "Rajasthan", "Bihar"};
+		PreparedStatement prepapredStatement = connection.prepareStatement("INSERT INTO " + operatorRangeTable + " VALUES (?, ?)");
 		
 		//inserts airtel numbers with the region code which starts from operatorRegions string array's index
-		int airtelRange = 98720;
-		for(int i =0; i < operatorRegions.length; i++) {
-			
-			prepapredStatement.setInt(1,airtelRange);
-			prepapredStatement.setString(2, "Airtel");
-			prepapredStatement.setString(3, operatorRegions[i]);
-			prepapredStatement.addBatch();
-			airtelRange++;
-			
-		}
+		int airtelRange = 9872;
 		
 		//inserts jio numbers with the region code which starts from operatorRegions string array's index
-		int jioRange = 88720;
-		for(int i =0; i < operatorRegions.length; i++) {
-			
-			prepapredStatement.setInt(1,jioRange);
-			prepapredStatement.setString(2, "Jio");
-			prepapredStatement.setString(3, operatorRegions[i]);
-			prepapredStatement.addBatch();
-			jioRange++;
-			
-		}
+		int jioRange = 8872;
 		
 		//inserts idea numbers with the region code which starts from operatorRegions string array's index
-		int ideaRange = 98140;
-		for(int i =0; i < operatorRegions.length; i++) {
-			
-			prepapredStatement.setInt(1,ideaRange);
-			prepapredStatement.setString(2, "Idea");
-			prepapredStatement.setString(3, operatorRegions[i]);
-			prepapredStatement.addBatch();
-			ideaRange++;
-			
-		}
+		int ideaRange = 9814;
 		
 		//inserts vi numbers with the region code which starts from operatorRegions string array's index
-		int viRange = 68000;
-		for(int i =0; i < operatorRegions.length; i++) {
-			
-			prepapredStatement.setInt(1,viRange);
-			prepapredStatement.setString(2, "VI");
-			prepapredStatement.setString(3, operatorRegions[i]);
-			prepapredStatement.addBatch();
-			viRange++;
-			
-		}
+		int viRange = 6800;
+		
+		prepapredStatement.setInt(1,airtelRange);
+		prepapredStatement.setString(2,"Airtel");
+		prepapredStatement.addBatch();
+		
+		prepapredStatement.setInt(1,jioRange);
+		prepapredStatement.setString(2,"jio");
+		prepapredStatement.addBatch();
+		
+		prepapredStatement.setInt(1,ideaRange);
+		prepapredStatement.setString(2,"Idea");
+		prepapredStatement.addBatch();
+		
+		prepapredStatement.setInt(1,viRange);
+		prepapredStatement.setString(2,"VI");
+		prepapredStatement.addBatch();
+		
+		
 		
 		//executes all statements at once
 		prepapredStatement.executeBatch();
@@ -380,6 +357,173 @@ public class OperatorDatabase {
 		
 	}
 	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Initialize table for storing operator details
+	 * @param connection -> connection to database
+	 * @param operatorTable -> table name
+	 * @throws Exception
+	 */
+	public static void operatorRegionTableIntializer(Connection connection, String operatorRegionTable) throws Exception{
+		
+		//if the passed value from the configs is empty or missing it sets the default value
+//		if(operatorTable == null || operatorTable.isEmpty()) {
+//			log.info("Default operator table name used");
+//			operatorTable = OPERATOR_TABLE;
+//		}		
+//		
+		//creates MESSAGE table with mentioned field
+		try(Statement stmt = connection.createStatement();) {		      
+		          String create_table = "CREATE TABLE " + operatorRegionTable +
+		                   "(region_id INT not NULL, " +
+		                   " region VARCHAR(255), " +
+		       		       " PRIMARY KEY (region_id ))"; 
+
+		         stmt.executeUpdate(create_table);
+		         log.info("Created operator table in given database");   	  
+		      } 
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+			   	  
+    	//checks if the exception code matches the table exists code and then logs table exists error
+			if(e.getErrorCode() == 1050) {
+				log.info(operatorRegionTable+" already exists");
+			}
+			//throws any other exception if occurred
+			else {
+				throw new Exception("Error while creating operator table");
+			}
+	         
+		  }
+	}
+	
+	
+public static void insertOperatorRegionValue(Connection connection, String operatorRegionTable) throws Exception {
+		
+		//if the passed value from the configs is empty or missing it sets the default value
+//		if(operatorTable == null || operatorTable.isEmpty()) {
+//			log.info("Default operator table used");
+//			operatorTable = OPERATOR_TABLE;
+//		}	
+		
+		//inserts value in the table and exits if insert errors exists
+		try {
+		
+		//prepared statement to insert in table	
+		PreparedStatement prepapredStatement = connection.prepareStatement("INSERT INTO " + operatorRegionTable + " VALUES (?, ?)");
+		
+		//string array of regions
+		String[] operatorRegions = new String[] {"Himachal Pradesh", "Jammu and Kashmir", "Ladakh", "Uttrakhand", "Punjab", "Haryana", "Delhi", "Uttar Pradesh", "Rajasthan", "Bihar"};
+		
+		//inserts airtel numbers with the region code which starts from operatorRegions string array's index
+		for(int i = 0; i < operatorRegions.length; i++) {
+			
+			prepapredStatement.setInt(1,i);
+			prepapredStatement.setString(2, operatorRegions[i]);
+			prepapredStatement.addBatch();
+			
+		}
+		
+		
+		//executes all statements at once
+		prepapredStatement.executeBatch();
+		
+
+		log.info("Inserted region values");
+		
+		}
+		catch(SQLException e) {
+			
+			//checks if the exception code matches the duplicate inserts in primary key
+			if(e.getErrorCode() == 1062) {
+				log.info("Duplicate values inserted in operator table");
+			}
+			//throws any other exception if occurred
+			else {
+				throw new Exception("Error while inserting in operator table");
+			}
+
+		}
+		
+	}
+	
+	
+  public static void joinTable(String operatorTable, String messageTable, String region, Connection connection)	{
+	  
+	  
+	  try(Statement stmt = connection.createStatement();) {
+		  
+		  String join_table = " create table sender_region_join1 as" +
+		  					  " select a.*, b.region as sent_region from  message_data as a inner join " + region + " b where FLOOR(((a.SENDER_NUMBER/100000) %10)) = b.region_id;" ;
+		  
+		  stmt.executeUpdate(join_table);
+		  
+		  join_table = "create table reciever_region_join1 as" +
+		  			   " select a.*, b.region as recieved_region from sender_region_join1 a inner join regioninfo b where FLOOR(((a.reciever_nUMBER/100000) %10)) = b.region_id;";
+		  
+		  stmt.executeUpdate(join_table);
+		  
+		  join_table = "create table reciever_operator_join1 as" +
+				       " select a.*, b.operator as recieved_operator from reciever_region_join1 a inner join operator_range_data b where FLOOR((a.reciever_nUMBER/1000000)) = b.phone_range/10;";
+		  
+		  stmt.executeUpdate(join_table);
+		  
+		  join_table = "create table finalMessageInfo1 as" +
+				       " select a.*, b.operator as sender_operator from reciever_operator_join1 a inner join operator_range_data b where FLOOR((a.sender_nUMBER/1000000)) = b.phone_range/10;";
+		  
+		  stmt.executeUpdate(join_table);
+		  
+		  
+	  } catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	  
+	  
+	  
+  }
+  
+  // a + b + c + d
+  // t1 = a+b
+//  t2 = t1 + c
+//	t4 = 	  t3 + d
+
+ 
+
+
+
+
+
+  public static void drop(Connection connection, String databaseName)throws Exception {
+	  
+	//creates database with the passed database name
+			try(Statement stmt = connection.createStatement()) {		      
+		         String createDatabase = "DROP DATABASe " + databaseName;
+		         stmt.executeUpdate(createDatabase);
+		         log.info("Dropped successfully");   	  
+			} 
+			catch (SQLException e) {
+				
+				//checks if the exception code matches the database exists code and logs database exists error
+				if(e.getErrorCode() == 1007) {
+					log.info("Database already exists");
+				}
+				//throws any other exception if occurred
+				else {
+					throw new Exception("Error while creating database");
+				}
+			} 
+	  
+  }
+
+
+
+	
 	//main function
 	
 	public static void main(String[] args) {
@@ -391,27 +535,41 @@ public class OperatorDatabase {
 		resourceIntializer();
 		
 		// intializing file path from the property
+		//getresourcevalue some better name
 		String databaseURL = ReadProperties.getResource("Db_URL");
 		String userID = ReadProperties.getResource("User");
 		String password = ReadProperties.getResource("Password");
 		String databaseName = ReadProperties.getResource("Database");
 		String operatorTable = ReadProperties.getResource("Operator_Table");
 		String messageTable = ReadProperties.getResource("Message_Table");
+		String region = "regionInfo";
 	
 		//crating connections to database
 	    Connection connection = databaseConnector(databaseURL, userID, password);
+	    
+	    drop(connection, "Mobile_Operator");
 		
 	    //intialising and selecting the database
 		databaseIntializer(connection, databaseName);
 		databaseSelector(connection, databaseName);
 		
 		//intializing tables
-		operatorInfoTableIntializer(connection, operatorTable);
+		operatorRangeInfoTableIntializer(connection, operatorTable);
 		messageInfoTableIntializer(connection, messageTable);
+		operatorRegionTableIntializer(connection, region);
 		
 		//inserting values in tables
-		insertOperatorValue(connection, operatorTable);
+		insertOperatorRangeValue(connection, operatorTable);
 		insertMessageDetails(connection, messageTable);
+		insertOperatorRegionValue(connection, region);
+		
+		
+		
+		//joinTable(operatorTable, messageTable, region, connection);
+		
+		
+		
+		
 		
 		//executing query
 		Query.queryExceutor(connection);
