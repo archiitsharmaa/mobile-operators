@@ -30,7 +30,7 @@ public class ReadProperties {
 	}
 
 	// the following fucntion returns the property type
-	public static String getResource(String property) {
+	public static String getValue(String property) {
 		return configFile.getProperty(property);
 	}
 
